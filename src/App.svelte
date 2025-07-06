@@ -20,6 +20,10 @@
     });
   }
 
+  function removeTask(index: number) {
+    tasks.splice(index, 1);
+  }
+
   function toggleDone(task: Task) {
     task.done = !task.done;
   }
@@ -29,8 +33,20 @@
   <div>
     <h1>{message}</h1>
     <TasksForm {addTask} />
-    <p>{totalDone} / {tasks.length} Tasks done</p>
-    <TasksList {tasks} {toggleDone} />
+    {#if tasks.length}
+      <p>{totalDone} / {tasks.length} Tasks done</p>
+    {:else}
+      <p>Add some taska to get started</p>
+    {/if}
+
+    {#if tasks.length}
+      <div class="button-container">
+        <button class="secondary">All </button>
+        <button class="secondary">Todo </button>
+        <button class="secondary">Done </button>
+      </div>
+    {/if}
+    <TasksList {tasks} {toggleDone} {removeTask} />
   </div>
 </main>
 
@@ -38,5 +54,10 @@
   main {
     margin: 1rem auto;
     max-width: 80%;
+  }
+  .button-container {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 1rem;
   }
 </style>
